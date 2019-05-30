@@ -1,0 +1,21 @@
+package com.example.camelspringbatchdemo.routes;
+
+import org.apache.camel.builder.RouteBuilder;
+import org.springframework.batch.core.Job;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
+public class CamelRoutes extends RouteBuilder {
+
+	@Autowired
+	private Job sampleJob;
+
+	@Override
+	public void configure() throws Exception {
+		from("file:C:\\Users\\suveerag\\git\\camelspringbatchdemo\\src\\main\\resources\\input\\?noop=true")
+		.setHeader("file_path", simple("${file:absolute.path}"))
+		.to("spring-batch:sampleJob");
+	}
+
+}
